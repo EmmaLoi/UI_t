@@ -1,4 +1,5 @@
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterMethod;
@@ -51,6 +52,58 @@ public class LoginToJira {
     String link = driver.getCurrentUrl();
     assertTrue(driver.findElement(By.id("type-val")).isDisplayed());
     assertTrue(link.contains("WEBINAR-11541"));
+  }
+
+  @Test
+  public void createIssue() {
+    driver.get("https://jira.hillel.it/secure/Dashboard.jspa");
+    driver.findElement(By.id("login-form-username")).sendKeys("LoiEmmanuel");
+    driver.findElement(By.id("login-form-password")).sendKeys("LoiEmmanuel");
+    driver.findElement(By.id("login")).click();
+
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30).getSeconds());
+    boolean elementIsPresent = wait.until(presenceOfElementLocated(By.id("create_link"))).isEnabled();
+    assertTrue(elementIsPresent);
+    try {
+      Thread.sleep(3000);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+
+    driver.findElement(By.id("create_link")).click();
+    wait.until(presenceOfElementLocated(By.id("project-field"))).isDisplayed();
+    driver.findElement(By.id("project-field")).clear();
+    driver.findElement(By.id("project-field")).sendKeys("Webinar (WEBINAR)");
+    driver.findElement(By.id("project-field")).sendKeys(Keys.TAB);
+    try {
+      Thread.sleep(3000);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+
+    driver.findElement(By.id("issuetype-field")).clear();
+    driver.findElement(By.id("issuetype-field")).sendKeys("Task");
+    driver.findElement(By.id("issuetype-field")).sendKeys(Keys.TAB);
+    try {
+      Thread.sleep(3000);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+
+    driver.findElement(By.id("summary")).sendKeys("new summary");
+    driver.findElement(By.id("reporter-field")).clear();
+    driver.findElement(By.id("reporter-field")).sendKeys("LoiEmmanuel");
+    driver.findElement(By.id("reporter-field")).sendKeys(Keys.TAB);
+    try {
+      Thread.sleep(3000);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+
+    driver.findElement(By.id("create-issue-submit")).click();
+
+    String popupPresent = wait.until(presenceOfElementLocated(By.className("aui-message-success"))).getText();
+    assertTrue(popupPresent.contains("WEBINAR"));
   }
 
   @AfterMethod
