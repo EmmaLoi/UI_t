@@ -36,9 +36,6 @@ public class TestNGListener implements ITestListener {
     Path pathToScreenShot = Paths.get(screenshot.getPath());
     String localTime = java.time.LocalTime.now() + ".png";
     String newLocalTime = localTime.replace(':','_');
-    System.out.println(newLocalTime);
-    System.out.println(screenshotsFolder);
-    System.out.println(screenshotsFolder.getPath());
     try {
       String screenshotName = screenshotsFolder + "\\" + "Screenshot_" + newLocalTime;
       System.out.println(screenshotName);
