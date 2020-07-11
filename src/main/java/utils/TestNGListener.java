@@ -26,24 +26,6 @@ public class TestNGListener implements ITestListener {
 
   @Override
   public void onTestFailure(ITestResult result) {
-//    File screenshotsFolder = new File(System.getProperty("D:\\Courses\\Java\\HomeWork_UI\\screenshots"));
-//
-//    if (!screenshotsFolder.exists()) {
-//      screenshotsFolder.mkdir();
-//    }
-//
-//    File screenshot = captureScreenshot();
-//    Path pathToScreenShot = Paths.get(screenshot.getPath());
-//    String localTime = java.time.LocalTime.now() + ".png";
-//    localTime.replace(':','_');
-//    System.out.println(localTime);
-//    System.out.println(screenshotsFolder);
-//    try {
-//      String screenshotName = screenshotsFolder + "\\" + "Screenshot_" + localTime;
-//      Files.copy(pathToScreenShot, Paths.get(screenshotName), StandardCopyOption.COPY_ATTRIBUTES);
-//    } catch (IOException e) {
-//      e.printStackTrace();
-//    }
 
     File screenshotsFolder = new File("D:\\Courses\\Java\\HomeWork_UI\\screens");
 
