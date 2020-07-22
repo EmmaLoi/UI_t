@@ -50,7 +50,7 @@ public class CreateIssuePage {
   }
 
   public void clearIssueTypeField() {
-
+    wait = new WebDriverWait(driver, Duration.ofSeconds(10).getSeconds());
     for (int i = 0; i < 2; i++) {
       try {
         wait.until(ExpectedConditions.visibilityOfElementLocated(issueTypeField)).clear();

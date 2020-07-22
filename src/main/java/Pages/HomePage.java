@@ -15,6 +15,9 @@ public class HomePage {
   WebDriverWait wait;
 
   private WebDriver driver = null; // хранилище
+  private By activityStream = By.xpath("//*[contains(text(), 'Activity Stream')]");
+  private By createLink = By.id("create_link");
+  private By titleCreateIssue = By.xpath("//h2[@title='Create Issue']");
 
   public HomePage(WebDriver driver) {
     this.driver = driver;
@@ -22,7 +25,7 @@ public class HomePage {
 
   public boolean activityStreamIsPresent() {
     wait = new WebDriverWait(driver, Duration.ofSeconds(10).getSeconds());
-    return wait.until(presenceOfElementLocated(By.xpath("//*[contains(text(), 'Activity Stream')]"))).isDisplayed();
+    return wait.until(presenceOfElementLocated(activityStream)).isDisplayed();
   }
 
   public void clickIssueKey(String issueKey) { //'WEBINAR-11542'
@@ -31,13 +34,13 @@ public class HomePage {
   }
 
   public void clickCreateLink() {
-    driver.findElement(By.id("create_link")).click();
+    driver.findElement(createLink).click();
     for (int i = 0; i < 3; i++) {
       try {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h2[@title='Create Issue']"))).isDisplayed();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(titleCreateIssue)).isDisplayed();
         break;
       } catch (TimeoutException e) {
-        driver.findElement(By.id("create_link")).click();
+        driver.findElement(createLink).click();
       }
     }
   }
