@@ -69,5 +69,10 @@ public class TaskPage {
   public boolean successDeleteMessageIsDisplayed(){
     return wait.until(presenceOfElementLocated(successDeleteMessage)).isEnabled();
   }
+
+  public boolean isCurrentUrlContainsIssueName(String issueKey){
+    String link = driver.getCurrentUrl();
+    return link.contains(issueKey);
+  }
 }
 

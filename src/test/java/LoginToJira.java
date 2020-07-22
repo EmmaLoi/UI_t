@@ -1,109 +1,117 @@
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
+import Pages.CreateIssuePage;
+import Pages.HomePage;
+import Pages.LoginPage;
+import Pages.TaskPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import utils.WebDriverFactory;
-import java.time.Duration;
-import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
+
 import static org.testng.Assert.assertTrue;
 
 public class LoginToJira {
 
   WebDriver driver = null;
-  WebDriverWait wait;
+  LoginPage loginPage = null;
+  HomePage homePage = null;
+  TaskPage taskPage = null;
+  CreateIssuePage createIssuePage = null;
 
   @BeforeMethod
   public void setUp() {
     WebDriverFactory.createInstance("Chrome");
     driver = WebDriverFactory.getDriver();
+    loginPage = new LoginPage(driver);
+    homePage = new HomePage(driver);
+    taskPage = new TaskPage(driver);
+    createIssuePage = new CreateIssuePage(driver);
   }
 
-  @Test
-  public void successfulLoginTest() {
-    driver.get("https://jira.hillel.it/secure/Dashboard.jspa");
-    driver.findElement(By.id("login-form-username")).sendKeys("LoiEmmanuel");
-    driver.findElement(By.id("login-form-password")).sendKeys("LoiEmmanuel");
-    driver.findElement(By.id("login")).click();
+  @DataProvider(name = "SuccesfulLogins")
+  public Object[][] succesfulData(){
+    return new Object[][]{
+        {"LoiEmmanuel", "LoiEmmanuel"},
+        {"webinar5", "webinar5"},
+    };
+  }
 
-    wait = new WebDriverWait(driver, Duration.ofSeconds(10).getSeconds());
-    boolean elementIsPresent = wait.until(presenceOfElementLocated(By.xpath("//*[contains(text(), 'Activity Stream')]"))).isDisplayed();
-    assertTrue(elementIsPresent);
+  @DataProvider(name = "UnsuccesfulLogins")
+  public Object[][] unsuccesfulData(){
+      return new Object[][]{
+          {"webinar5", "Password", "'Sorry, your username and password are incorrect - please try again.'"},
+          {"web5", "webinar5", "'Sorry, your username and password are incorrect - please try again.'"},
+          {"Emma", "webinar54", "'Sorry, your username and password are incorrect - please try again.'"},
+      };
+  }
 
+  @Test(dataProvider = "SuccesfulLogins")
+  public void successfulLoginTest(String name, String password) {
+    loginPage.navigateToDashboard();
+    loginPage.enterUserName(name);
+    loginPage.enterPassword(password);
+    loginPage.clickLogin();
+
+    assertTrue(homePage.activityStreamIsPresent());
+  }
+
+  @Test(dataProvider = "UnsuccesfulLogins")
+  public void unsuccessfulLoginTest(String name, String password, String expectedResult) {
+    loginPage.navigateToDashboard();
+    loginPage.enterUserName(name);
+    loginPage.enterPassword(password);
+    loginPage.clickLogin();
+
+    assertTrue(loginPage.errorMessageIsPresent(expectedResult));
   }
 
   @Test
   public void viewJiraTicket() {
-    driver.get("https://jira.hillel.it/secure/Dashboard.jspa");
-    driver.findElement(By.id("login-form-username")).sendKeys("webinar5");
-    driver.findElement(By.id("login-form-password")).sendKeys("webinar5");
-    driver.findElement(By.xpath("//*[@id='login']")).click();
+    loginPage.navigateToDashboard();
+    loginPage.enterUserName("webinar5");
+    loginPage.enterPassword("webinar5");
+    loginPage.clickLogin();
 
-    // Explicit Wait for element to appear
-    wait = new WebDriverWait(driver, Duration.ofSeconds(10).getSeconds());
-    boolean elementIsPresent = wait.until(presenceOfElementLocated(By.xpath("//*[contains(text(), 'Activity Stream')]"))).isDisplayed();
-    assertTrue(elementIsPresent);
+    assertTrue(homePage.activityStreamIsPresent());
 
-    wait = new WebDriverWait(driver, Duration.ofSeconds(30).getSeconds());
-    driver.findElement(By.xpath("//*[@id='gadget-10002']//child::*[contains(@class, 'issuekey')]//child::*[contains(@data-issue-key, 'WEBINAR-11541')]")).click();
+    homePage.clickIssueKey("'WEBINAR-11542'");
 
-    String link = driver.getCurrentUrl();
-    assertTrue(driver.findElement(By.id("type-val")).isDisplayed());
-    assertTrue(link.contains("WEBINAR-11541"));
+    assertTrue(taskPage.taskNameIsPresent());
+    assertTrue(taskPage.isCurrentUrlContainsIssueName("WEBINAR-11542"));
   }
 
   @Test
   public void createIssue() {
-    driver.get("https://jira.hillel.it/secure/Dashboard.jspa");
-    driver.findElement(By.id("login-form-username")).sendKeys("LoiEmmanuel");
-    driver.findElement(By.id("login-form-password")).sendKeys("LoiEmmanuel");
-    driver.findElement(By.id("login")).click();
+    loginPage.navigateToDashboard();
+    loginPage.enterUserName("LoiEmmanuel");
+    loginPage.enterPassword("LoiEmmanuel");
+    loginPage.clickLogin();
+    homePage.activityStreamIsPresent();
 
-    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30).getSeconds());
-    boolean elementIsPresent = wait.until(presenceOfElementLocated(By.id("create_link"))).isEnabled();
-    assertTrue(elementIsPresent);
-    try {
-      Thread.sleep(3000);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
+    homePage.clickCreateLink();
+    createIssuePage.createIssueDialogIsOpened();
 
-    driver.findElement(By.id("create_link")).click();
-    wait.until(presenceOfElementLocated(By.id("project-field"))).isDisplayed();
-    driver.findElement(By.id("project-field")).clear();
-    driver.findElement(By.id("project-field")).sendKeys("Webinar (WEBINAR)");
-    driver.findElement(By.id("project-field")).sendKeys(Keys.TAB);
-    try {
-      Thread.sleep(3000);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
+    createIssuePage.projectFieldIsDisplayed();
+    createIssuePage.clearProjectField();
+    createIssuePage.fillProjectField("Webinar (WEBINAR)");
+    createIssuePage.clickTabInProjectField();
 
-    driver.findElement(By.id("issuetype-field")).clear();
-    driver.findElement(By.id("issuetype-field")).sendKeys("Task");
-    driver.findElement(By.id("issuetype-field")).sendKeys(Keys.TAB);
-    try {
-      Thread.sleep(3000);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
+    createIssuePage.issueTypeFieldIsDisplayed();
+    createIssuePage.clearIssueTypeField();
+    createIssuePage.fillissueTypeField("Task");
+    createIssuePage.clickTabInIssueTypeField();
 
-    driver.findElement(By.id("summary")).sendKeys("new summary");
-    driver.findElement(By.id("reporter-field")).clear();
-    driver.findElement(By.id("reporter-field")).sendKeys("LoiEmmanuel");
-    driver.findElement(By.id("reporter-field")).sendKeys(Keys.TAB);
-    try {
-      Thread.sleep(3000);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
+    createIssuePage.enterSummary("summary");
 
-    driver.findElement(By.id("create-issue-submit")).click();
+    createIssuePage.clearReporterField();
+    createIssuePage.fillReporterField("LoiEmmanuel");
+    createIssuePage.clickTabInReporterField();
 
-    String popupPresent = wait.until(presenceOfElementLocated(By.className("aui-message-success"))).getText();
-    assertTrue(popupPresent.contains("WEBINAR"));
+    createIssuePage.clickCreateIssueSubmitButton();
+
+    assertTrue(createIssuePage.isPopupContinsProjectType("WEBINAR"));
   }
 
   @AfterMethod
