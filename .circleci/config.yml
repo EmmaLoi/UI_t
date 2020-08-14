@@ -13,7 +13,7 @@ jobs:
       - run:
           name: Creating Dummy Artifacts
           command: |
-            mkdir /home/circleci/repo/artifacts;
-            echo "my artifact file" > /home/circleci/repo/artifacts/artifact-1;
+            mkdir artifacts;
+            echo "my artifact file" > artifacts/artifact-1;
       - store_artifacts:
-          path: ./artifacts
+          path: artifacts
