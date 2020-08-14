@@ -11,6 +11,6 @@ jobs:
           command: |
             mvn clean test
       - store_artifacts:
-          path: /home/circleci/repo/screen
-          destination: /home/circleci/repo/screen
+          path: /tmp/screenshots
+          destination: screenshot
           when: always
