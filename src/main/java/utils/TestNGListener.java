@@ -17,13 +17,14 @@ public class TestNGListener implements ITestListener {
   @Override
   //Запускается один раз перед каждым тестом
   public void onTestStart(ITestResult result) {
-    String browserName = result.getTestContext().getCurrentXmlTest().getParameter("browserName");
-    System.out.println("Browser name is " + browserName);
+//    String browserName = result.getTestContext().getCurrentXmlTest().getParameter("browserName");
+//    System.out.println("Browser name is " + browserName);
+    System.out.println("onTestStart");
   }
 
   @Override
   public void onTestSuccess(ITestResult result) {
-
+    System.out.println("onTestSuccess");
   }
 
   @Override
@@ -45,26 +46,27 @@ public class TestNGListener implements ITestListener {
     } catch (IOException e) {
       e.printStackTrace();
     }
+    System.out.println("onTestFailure");
   }
 
   @Override
   public void onTestSkipped(ITestResult result) {
-
+    System.out.println("onTestSkipped");
   }
 
   @Override
   public void onTestFailedButWithinSuccessPercentage(ITestResult result) {
-
+    System.out.println("onTestFailedButWithinSuccessPercentage");
   }
 
   @Override
   public void onStart(ITestContext context) {
-
+    System.out.println("onStart");
   }
 
   @Override
   public void onFinish(ITestContext context) {
-
+    System.out.println("onFinish");
   }
 
   private File captureScreenshot() {

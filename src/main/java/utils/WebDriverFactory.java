@@ -62,14 +62,14 @@ public class WebDriverFactory {
     map.put("latency", "10");
     map.put("download_throughput", "1024");
     map.put("upload_throughput", "1024");
-    CommandExecutor executor = ((ChromeDriver) driver).getCommandExecutor();
-    try {
-      Response response = executor.execute(
-          new Command(((ChromeDriver) driver).getSessionId(), "setNetworkConditions", ImmutableMap.of("network_conditions", ImmutableMap.copyOf(map)))
-      );
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+//    CommandExecutor executor = ((ChromeDriver) driver).getCommandExecutor();
+//    try {
+//      Response response = executor.execute(
+//          new Command(((ChromeDriver) driver).getSessionId(), "setNetworkConditions", ImmutableMap.of("network_conditions", ImmutableMap.copyOf(map)))
+//      );
+//    } catch (IOException e) {
+//      e.printStackTrace();
+//    }
 
     webDriver.set(driver);
   }
