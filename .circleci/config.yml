@@ -11,6 +11,6 @@ jobs:
           command: |
             mvn clean test
       - store_artifacts:
-          path: screens
-          destination: screens
+          path: D:\Courses\Java\HomeWork_UI\screens
+          destination: D:\Courses\Java\HomeWork_UI\screens
           when: always
