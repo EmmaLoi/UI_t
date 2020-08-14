@@ -1,11 +1,17 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Sample Test Suite" parallel="classes" thread-count="2">
 
-    <test name="Sample Test">
-<!--        <parameter name="waitTimeOutInSeconds" value="10"></parameter>-->
-        <parameter name="browserName" value="Chrome"/>
+    <parameter name="browserName" value="Chrome"/>
+<!--    <parameter name="waitTimeOutInSeconds" value="10"></parameter>-->
+
+<!--    <test name="Sample Test">-->
+    <test name="AddDeleteCommentInJira">
         <classes>
-            <class name="AddDeleteCommentInJira"/>
+            <class name="AddDeleteCommentInJira">
+            <methods>
+                <include name="addComment"/>
+            </methods>
+            </class>
         </classes>
     </test>
 
