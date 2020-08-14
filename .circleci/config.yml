@@ -13,7 +13,8 @@ jobs:
       - run:
           name: Creating Dummy Artifacts
           command: |
-            echo "my artifact file" > ~/repo/sreens/artifact-1;
+            mkdir ~/repo/screens;
+            echo "my artifact files in a dir" > ~/repo/screens/artifact-2;
       - store_artifacts:
-          path: ~/repo/sreens
+          path: ~/repo/screens/artifact-2
           destination: artifact-file
