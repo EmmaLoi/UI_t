@@ -9,7 +9,7 @@ jobs:
       - run:
           name: run tests
           command: |
-            mvn clean test
+            mvn clean test -X
       - run:
           name: Creating Dummy Artifacts
           command: |
