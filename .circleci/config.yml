@@ -3,7 +3,7 @@ jobs:
   build:
     docker:
       - image: circleci/openjdk:8u222-stretch-browsers
-    working_directory: /home/circleci/repo
+    working_directory: ~/repo
     steps:
       - checkout
       - run:
@@ -16,4 +16,4 @@ jobs:
             mkdir /home/circleci/repo/artifacts;
             echo "my artifact file" > /home/circleci/repo/artifacts/artifact-1;
       - store_artifacts:
-          path: /home/circleci/repo/artifacts/artifact-1
+          path: ./artifacts
