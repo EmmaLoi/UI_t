@@ -28,7 +28,7 @@ public class AddDeleteCommentInJira {
     taskPage = new TaskPage(driver);
 
     loginPage.navigateToTask12061();
-    loginPage.enterUserName("LoiEmmanuel");
+    loginPage.enterUserName("LoiEmmanuel1");
     loginPage.enterPassword("LoiEmmanuel");
     loginPage.clickLoginFormSubmit();
     assertTrue(taskPage.taskNameIsPresent());
