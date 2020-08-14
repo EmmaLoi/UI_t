@@ -3,7 +3,7 @@ jobs:
   build:
     docker:
       - image: circleci/openjdk:8u222-stretch-browsers
-    working_directory: D:/Courses/Java/HomeWork_UI
+    working_directory: ui-test
     steps:
       - checkout
       - run:
