@@ -29,7 +29,8 @@ public class TestNGListener implements ITestListener {
   @Override
   public void onTestFailure(ITestResult result) {
 
-    File screenshotsFolder = new File("D:\\Courses\\Java\\HomeWork_UI\\screens");
+//    File screenshotsFolder = new File("D:\\Courses\\Java\\HomeWork_UI\\screens");
+    File screenshotsFolder = new File(System.getProperty("user.dir") + "\\screens");
 
     if (!screenshotsFolder.exists()) {
       screenshotsFolder.mkdir();
