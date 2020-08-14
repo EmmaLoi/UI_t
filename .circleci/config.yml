@@ -12,5 +12,4 @@ jobs:
             mvn clean test
       - store_artifacts:
           path: /tmp/screenshots
-          destination: screenshot
           when: always
