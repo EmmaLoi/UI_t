@@ -5,11 +5,11 @@
 <!--    <parameter name="waitTimeOutInSeconds" value="10"></parameter>-->
 
 <!--    <test name="Sample Test">-->
-    <test name="AddDeleteCommentInJira">
+    <test name="LoginToJira">
         <classes>
-            <class name="AddDeleteCommentInJira">
+            <class name="LoginToJira">
             <methods>
-                <include name="addComment"/>
+                <include name="successfulLoginTest"/>
             </methods>
             </class>
         </classes>
