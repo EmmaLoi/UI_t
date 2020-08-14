@@ -3,7 +3,7 @@ jobs:
   build:
     docker:
       - image: circleci/openjdk:8u222-stretch-browsers
-    working_directory: D:\Courses\Java\HomeWork_UI
+    working_directory: D:/Courses/Java/HomeWork_UI
     steps:
       - checkout
       - run:
@@ -12,6 +12,6 @@ jobs:
             mvn clean test
       - store_artifacts:
           path: screens
-          destination: \screens
+          destination: screens
           when: always
 
