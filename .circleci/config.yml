@@ -11,7 +11,7 @@ jobs:
           command: |
             mvn clean test
       - store_artifacts:
-          path: \screens
+          path: screens
           destination: \screens
           when: always
 
