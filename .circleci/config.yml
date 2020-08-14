@@ -10,12 +10,6 @@ jobs:
           name: run tests
           command: |
             mvn clean test -X
-      - run:
-          name: Creating Dummy Artifacts
-          command: |
-#             mv ~/repo/screens/*  ~/repo/screens/artifact-2
-#            mkdir ~/repo/screens;
-#            echo "my artifact files in a dir" > ~/repo/screens/artifact-2;
       - store_artifacts:
           path: ~/repo/screens/screenshot.png
           destination: artifact-file
