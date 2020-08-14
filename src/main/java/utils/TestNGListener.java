@@ -30,7 +30,7 @@ public class TestNGListener implements ITestListener {
   public void onTestFailure(ITestResult result) {
 
 //    File screenshotsFolder = new File("D:\\Courses\\Java\\HomeWork_UI\\screens");
-    File screenshotsFolder = new File(System.getProperty("user.dir") + "\\screens");
+    File screenshotsFolder = new File(System.getProperty("user.dir") + "/screens");
 
     if (!screenshotsFolder.exists()) {
       screenshotsFolder.mkdir();
@@ -40,7 +40,8 @@ public class TestNGListener implements ITestListener {
     String localTime = java.time.LocalTime.now() + ".png";
     String newLocalTime = localTime.replace(':','_');
     try {
-      String screenshotName = screenshotsFolder + "\\" + "Screenshot_" + newLocalTime;
+//      String screenshotName = screenshotsFolder + "\\" + "Screenshot_" + newLocalTime;
+      String screenshotName = screenshotsFolder + "/" + "Screenshot_" + newLocalTime;
       System.out.println(screenshotName);
       Files.copy(pathToScreenShot, Paths.get(screenshotName), StandardCopyOption.COPY_ATTRIBUTES);
     } catch (IOException e) {
