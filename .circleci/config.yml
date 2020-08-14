@@ -1,6 +1,11 @@
 version: 2
+orbs:
+  win: circleci/windows@2.3.0
+
 jobs:
   build:
+    executor:
+      name: win/default
     docker:
       - image: circleci/openjdk:8u222-stretch-browsers
 #    working_directory: ~/repo
@@ -11,6 +16,6 @@ jobs:
           command: |
             mvn clean test
       - store_artifacts:
-          path: D:\Courses\Java\HomeWork_UI\screens
-          destination: D:\Courses\Java\HomeWork_UI\screens
+          path: screens
+          destination: screens
           when: always
