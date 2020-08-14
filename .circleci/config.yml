@@ -13,8 +13,9 @@ jobs:
       - run:
           name: Creating Dummy Artifacts
           command: |
-            mkdir ~/repo/screens;
-            echo "my artifact files in a dir" > ~/repo/screens/artifact-2;
+             mv ~/repo/screens/*  ~/repo/screens/artifact-2
+#            mkdir ~/repo/screens;
+#            echo "my artifact files in a dir" > ~/repo/screens/artifact-2;
       - store_artifacts:
           path: ~/repo/screens/artifact-2
           destination: artifact-file
