@@ -10,6 +10,7 @@ jobs:
           name: run tests
           command: |
             mvn clean test
+            ls -la
       - store_artifacts:
           path: screens
           destination: screens
