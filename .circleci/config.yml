@@ -11,5 +11,4 @@ jobs:
           command: |
             mvn clean test -X
       - store_artifacts:
-          path: ~/repo/screens/screenshot.png
-          destination: artifact-file
+          path: ~/repo/screens/
