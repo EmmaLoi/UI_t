@@ -38,11 +38,11 @@ public class TestNGListener implements ITestListener {
     File screenshot = captureScreenshot();
     Path pathToScreenShot = Paths.get(screenshot.getPath());
     String localTime = java.time.LocalTime.now() + ".png";
-//    String newLocalTime = localTime.replace(':','_');
     try {
 //      String screenshotName = screenshotsFolder + "\\" + "Screenshot_" + newLocalTime;
 //    String screenshotName = screenshotsFolder + "/" + "screenshot.png" ;
-      String screenshotName = screenshotsFolder + "/" + localTime;
+      String newLocalTime = localTime.replace(':', '_');
+      String screenshotName = screenshotsFolder + "/" + newLocalTime;
       System.out.println(screenshotName);
       Files.copy(pathToScreenShot, Paths.get(screenshotName), StandardCopyOption.COPY_ATTRIBUTES);
     } catch (IOException e) {
